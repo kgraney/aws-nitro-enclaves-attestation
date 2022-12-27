@@ -49,33 +49,33 @@ static ALL_SIGALGS: &[&webpki::SignatureAlgorithm] = &[
 ];
 
 #[derive(Debug, Serialize, Deserialize)]
-struct NitroAdDocPayload {
-    module_id: String,
-    digest: String,
+pub struct NitroAdDocPayload {
+    pub module_id: String,
+    pub digest: String,
 
     #[serde(with = "ts_milliseconds")]
-    timestamp: DateTime<Utc>,
+    pub timestamp: DateTime<Utc>,
 
     #[serde(serialize_with = "ser_peer_public")]
-    pcrs: HashMap<u8, ByteBuf>,
+    pub pcrs: HashMap<u8, ByteBuf>,
 
     #[serde(skip_serializing)]
-    certificate: ByteBuf,
+    pub certificate: ByteBuf,
 
     #[serde(skip_serializing)]
-    cabundle: Vec<ByteBuf>,
+    pub cabundle: Vec<ByteBuf>,
 
     // optional
     #[serde(skip_serializing_if = "Option::is_none")]
-    public_key: Option<ByteBuf>,
+    pub public_key: Option<ByteBuf>,
 
     // optional
     #[serde(skip_serializing_if = "Option::is_none")]
-    user_data: Option<ByteBuf>,
+    pub user_data: Option<ByteBuf>,
 
     // optional
     #[serde(skip_serializing_if = "Option::is_none")]
-    nonce: Option<ByteBuf>,
+    pub nonce: Option<ByteBuf>,
 }
 
 fn ser_peer_public<S>(peer_public: &HashMap<u8, ByteBuf>, serializer: S) -> Result<S::Ok, S::Error>
@@ -129,7 +129,7 @@ impl From<serde_json::Error> for NitroAdError {
 }
 
 pub struct NitroAdDoc {
-    payload_ref: NitroAdDocPayload,
+    pub payload_ref: NitroAdDocPayload,
 }
 
 impl NitroAdDoc {
